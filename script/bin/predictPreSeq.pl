@@ -2,6 +2,7 @@
 use strict;
 use warnings;
 use File::Temp qw/ tempfile tempdir /;
+use File::Which qw(which);
 
 BEGIN{
     use FindBin qw ($Bin);
@@ -36,10 +37,12 @@ my ($fh_res, $result_file) = tempfile( DIR => $t_dir, SUFFIX => '.result');
 system("perl $Bin/computeSVMFeatureForPresequence.pl -c 1 $ARGV[0] > $svm_file");
 
 #scaling
-system("svm-scale -r $Bin/PreSeq.scaling $svm_file > $scaled_file");
+which 'svm-scale'   or   die  "Error; shell could not find 'svm-scale'\n";
+system( "svm-scale -r $Bin/PreSeq.scaling $svm_file > $scaled_file" );
 
 #Predict Preseq
-`svm-predict -b 1 $scaled_file $Bin/PreSeq.model $result_file`;
+which 'svm-predict'   or   die  "Error; shell could not find 'svm-predict'\n";
+system( "svm-predict -b 1 $scaled_file $Bin/PreSeq.model $result_file" );
 
 open(RS,"$result_file")||die "Cannot open input.result \n";
 my @result = <RS>;
