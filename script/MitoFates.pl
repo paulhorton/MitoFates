@@ -24,11 +24,19 @@ my $VERSION = "v1.1";
 my $scriptDir = $Bin;
 ####################
 
-my $usage=  "Usage: MitoFates.pl MultiFastaFile {fungi,metazoa,plant}\n";
+
+#----------  Process ARGV  ----------
+my $usage=  "Usage: $0 MultiFastaFile {fungi,metazoa,plant}\n";
 
 @ARGV == 2   or   die $usage;
 
-my $osFlag = "$ARGV[1]";
+my $seqs_pathname=  shift @ARGV;
+
+-f $seqs_pathname
+    or  die  "Error could not find file '$seqs_pathname';\n$usage";
+
+my $osFlag=  shift @ARGV;
+
 
 ####################
 my @Tom20Motif_array;
@@ -39,11 +47,12 @@ my @motifs = sort(MotifHelixPosition->new()->getMotifs());
 ####################
 
 # Get Positions for seqs.
-open my $fastain, "<", $ARGV[0] || die "Given fasta file cannot be opend";
+open  my $seqs_fh, '<', $seqs_pathname
+    or    die  "Error; could not open file $seqs_pathname: $!";
 {
     local $/ ="\n>";
 
-    while(my $line = <$fastain>){
+    while( my $line= <$seqs_fh>){
 
     # Turn $/ into original.
 	local $/ = "\n";
@@ -78,11 +87,11 @@ open my $fastain, "<", $ARGV[0] || die "Given fasta file cannot be opend";
 }
 
 ## Prediction of Presequence
-my @resultPS = `perl $Bin/bin/predictPreSeq.pl $ARGV[0]`;
+my @resultPS = `perl $Bin/bin/predictPreSeq.pl $seqs_pathname]`;
 
 
 ## Prediction of CleavageSite
-my @resultCS = `perl $Bin/bin/cleavage.pl --gamma --svm --$osFlag $ARGV[0]`;
+my @resultCS = `perl $Bin/bin/cleavage.pl --gamma --svm --$osFlag $seqs_pathname`;
 
 ## Print header
 print "Sequence ID\tProbability of presequence\tPrediction\tCleavage site (processing enzyme)\tNet charge\tPositions for TOM20 recognition motif (deliminated by comma)\tPosition of amphypathic alpha-helix\t";
