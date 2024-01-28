@@ -4,7 +4,7 @@
 #  Creation Date:  2014/1/28
 
 #  This module returns positions of significant MTS motifs and helix for Tom20.
-#  This class is a sub-class of ncfHmoment class 
+#  This class is a sub-class of ncfHmoment class
 
 package MotifHelixPosition;
 BEGIN{
@@ -94,7 +94,7 @@ sub getAllMotifPositions {
     if(keys %{$self->{matchPos}} == 0){
 	return 0;
     }
-    
+
     return wantarray ? %{$self->{matchPos}} : $self->{matchPos};
 }
 
