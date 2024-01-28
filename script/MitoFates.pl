@@ -6,6 +6,8 @@
 #  Forked and modified by Paul Horton in 2024/01/28
 #  Those modifications are minor; cosmetic changes to code, more informative error messages etc.
 
+use 5.028;#  (In 2024) Perl 5.28 is old but not ancient.  Someday maybe require version 5.32 for chained comparisons.
+
 BEGIN{
     use FindBin qw ($Bin);
     use lib "$Bin/bin/modules";
