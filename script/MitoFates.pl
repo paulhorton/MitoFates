@@ -2,6 +2,9 @@
 #  Author:  Yoshinori Fukasawa and Kenichiro Imai
 #  Organizations:  Department of Computational Biology, University of Tokyo
 #  Copyright (C) 2014, Yoshinori Fukasawa and Kenichiro Imai, All rights reserved.
+#
+#  Forked and modified by Paul Horton in 2024/01/28
+#  Those modifications are minor; cosmetic changes to code, more informative error messages etc.
 
 BEGIN{
     use FindBin qw ($Bin);
@@ -19,9 +22,9 @@ my $VERSION = "v1.1";
 my $scriptDir = $Bin;
 ####################
 
-if (@ARGV<2){
-    die "Usage: [MitoFates.pl] [MultiFastaFile] [Organism Flag: fungi, metazoa or plant]\n";
-}
+my $usage=  "Usage: MitoFates.pl MultiFastaFile {fungi,metazoa,plant}\n";
+
+@ARGV == 2   or   die $usage;
 
 my $osFlag = "$ARGV[1]";
 
@@ -31,7 +34,7 @@ my @Helix_array;
 my @MTSMotif_array;
 #to print out motifs in the header, sorted motif list is required.
 my @motifs = sort(MotifHelixPosition->new()->getMotifs());
-#################### 
+####################
 
 # Get Positions for seqs.
 open my $fastain, "<", $ARGV[0] || die "Given fasta file cannot be opend";
