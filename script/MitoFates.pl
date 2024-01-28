@@ -87,7 +87,7 @@ open  my $seqs_fh, '<', $seqs_pathname
 }
 
 ## Prediction of Presequence
-my @resultPS = `perl $Bin/bin/predictPreSeq.pl $seqs_pathname]`;
+my @resultPS = `perl $Bin/bin/predictPreSeq.pl $seqs_pathname`;
 
 
 ## Prediction of CleavageSite
