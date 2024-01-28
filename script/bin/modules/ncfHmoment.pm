@@ -187,7 +187,7 @@ sub calcHmoment{
 	    $theta = $dot/($mu_H * $mu_C); #cos\theta
 	    $theta = rad2deg(acos($theta));
 	}
-	
+
 	my $rotDeg = deg2rad(90-$deg);
 	my @coord_mu_C = ($x_c*cos($rotDeg)-$y_c*sin($rotDeg), $x_c*sin($rotDeg)+$y_c*cos($rotDeg) );
 
